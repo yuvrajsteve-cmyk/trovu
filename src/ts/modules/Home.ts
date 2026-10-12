@@ -394,7 +394,20 @@ export default class Home {
     } else {
       redirectUrl = CallHandler.getRedirectUrlToHome(envQuery, response);
     }
-    window.location.href = redirectUrl;
+    // window.location.href = redirectUrl;
+    if (redirectUrl && !redirectUrl.startsWith("../")) {
+      // Native HTML Ancher Trigger 
+      const externalLink = document.createElement('a');
+      externalLink.href = redirectUrl;
+      externalLink.target = '_blank';
+      externalLink.rel = 'nooperner noreferrer';
+      externalLink.style.display = 'none';
+      document.body.appendChild(externalLink);
+      externalLink.click();
+      document.body.removeChild(externalLink);
+    } else {
+      window.location.href = redirectUrl;
+    }
   };
 
   showSubmitProgress() {
